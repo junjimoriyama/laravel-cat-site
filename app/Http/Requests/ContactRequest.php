@@ -40,7 +40,10 @@ class ContactRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone.regex' => ":attributesを正しく入力してください"
+            'phone.regex' => ":attributeを正しく入力してください"
         ];
     }
 }
+
+// $result = array_fill(1,5,0);
+$result = array_fill(count:5, start_index:1, value:0);

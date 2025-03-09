@@ -156,6 +156,7 @@ return [
     'attributes' => [
         'name' => 'お名前',
         'name_kana' => 'お名前(フリガナ)',
+        'phone' => '電話番号',
         'email' => 'メールアドレス',
         'body' => '本文'
     ]
