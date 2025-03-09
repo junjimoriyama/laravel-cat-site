@@ -62,4 +62,18 @@ class AdminBlogController extends Controller
         // admin.blogs.indexへ遷移　セッションに更新成功のデータ渡す
         return to_route('admin.blogs.index')->with('success', '更新完了しました。');
     }
+
+    public function destroy(string $id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        $blog->delete();
+
+        Storage::disk('public')->delete($blog->image);
+
+        return to_route('admin.blogs.index')->with('success', '削除しました。');
+    }
 }
+
+// インスタンスメソッド (delete();) → new で作られたオブジェクトに対して実行
+// クラスメソッド (destroy($id);) → インスタンスなしでクラスから直接実行
