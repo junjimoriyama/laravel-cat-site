@@ -13,7 +13,7 @@ class AdminBlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::latest('updated_at')->simplePaginate(10);
         return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
@@ -36,10 +36,8 @@ class AdminBlogController extends Controller
         return to_route('admin.blogs.index')->with('success', 'ブログを投稿しました');
     }
 
-    public function edit(string $id)
+    public function edit(Blog $blog)
     {
-        $blog = Blog::findOrFail($id);
-        // keyが'blog'、valueが$blog
         return view('admin.blogs.edit', ['blog' => $blog]);
     }
 
@@ -65,15 +63,61 @@ class AdminBlogController extends Controller
 
     public function destroy(string $id)
     {
-        $blog = Blog::findOrFail($id);
-
+        // 削除対象のブログを取得
+        $blog = Blog::findOrFail();
+        // 削除実行
         $blog->delete();
-
+        // 画像の削除
         Storage::disk('public')->delete($blog->image);
-
-        return to_route('admin.blogs.index')->with('success', '削除しました。');
+        // トップ画面遷移
+        return to_route('admin.blogs.index')->with("success", "削除しました。");
     }
+
+
 }
 
 // インスタンスメソッド (delete();) → new で作られたオブジェクトに対して実行
 // クラスメソッド (destroy($id);) → インスタンスなしでクラスから直接実行
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// public function destroy(string $id)
+// {
+//     $blog = Blog::findOrFail($id);
+
+//     $blog->delete();
+
+//     Storage::disk('public')->delete($blog->image);
+
+//     return to_route('admin.blogs.index')->with('success', '削除しました。');
+// }
